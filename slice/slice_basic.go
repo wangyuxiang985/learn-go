@@ -42,7 +42,21 @@ func main()  {
 	fmt.Println("===================")
 	testSliceAppend()
 
-	
+	fmt.Println("---------------------")
+	testSliceCopy()
+}
+
+//copy 的两个类型必须一致
+//slicecopy 方法最终的复制结果取决于较短的那个切片，当较短的切片复制完成，整个复制过程就全部完成了
+func testSliceCopy() {
+	slice := make([]byte, 3)
+	n := copy(slice, "abcde")
+	fmt.Println(n,slice)
+
+	array := []int{10, 20, 30, 40}
+	slice2 := make([]int, 6)
+	n2 := copy(slice2, array)
+	fmt.Println(n2,slice2)
 }
 
 //Go 中切片扩容的策略:
