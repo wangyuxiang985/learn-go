@@ -32,8 +32,28 @@ func main()  {
 	fmt.Println(d)
 	fmt.Println("******************")
 	nil_demo()
+	fmt.Println("&&&&&&&&&&&&&&&&&&&&&&")
+	testPanic()
 
 }
+
+//代码会引发panic
+/*
+在Go语言中对于引用类型的变量，我们在使用的时候不仅要声明它，还要为它分配内存空间，否则我们的值就没办法存储。
+而对于值类型的声明不需要分配内存空间，是因为它们在声明的时候已经默认分配好了内存空间
+ */
+func testPanic() {
+	//panic: runtime error: invalid memory address or nil pointer dereference
+	var a *int
+	*a = 100
+	fmt.Println(*a)
+
+	//panic: assignment to entry in nil map
+	var b map[string]int
+	b["测试"] = 100
+	fmt.Println(b)
+}
+//nil值判断
 func nil_demo()  {
 	var p *string
 	fmt.Println(p)
