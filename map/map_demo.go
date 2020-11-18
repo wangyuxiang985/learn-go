@@ -12,12 +12,31 @@ map类型的变量默认初始值为nil，需要使用make()函数来分配内�
 make(map[KeyType]ValueType, [cap])
 cap表示map的容量，该参数虽然不是必须的，但是我们应该在初始化map的时候就为其指定一个合适的容量
  */
+//判断某个键是否存在  value, ok := map[key]
+//若key存在则ok为true，value为对应的值；若key不存在，则ok为false，value为对应值类型的零值
 func main()  {
 	fmt.Println("==========基本用法=========")
 	basicUsage()
+	fmt.Println("==============判断key是否存在===========")
+	containsKey()
 
 }
 
+//判断某个key是否存在
+func containsKey() {
+	sourceMap := map[string]int{
+		"李雷": 20,
+		"丹尼": 50,
+	}
+	value,ok :=sourceMap["李雷1"]
+	if ok {
+		fmt.Println(value)
+	} else {
+		fmt.Println(value)
+		fmt.Println("不存在")
+	}
+}
+//map基本用法
 func basicUsage() {
 	sourcemMap := make(map[string]int, 8)
 	sourcemMap["张三"] = 90
