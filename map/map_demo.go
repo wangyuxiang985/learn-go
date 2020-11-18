@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
+	"sort"
+	"time"
 )
 
 //map是一种无序的基于key-value的数据结构，Go语言中的map是引用类型，必须初始化才能使用
@@ -36,7 +39,33 @@ func main()  {
 	rangeMap()
 	fmt.Println("==========delete()删除键值对")
 	deleteMapKey()
+	fmt.Println("==========按照指定顺序遍历map==========")
+	sortedRangeMap()
 
+}
+
+//按照指定顺序遍历map
+func sortedRangeMap() {
+	//初始化随机数种子
+	rand.Seed(time.Now().UnixNano())
+	var sourceMap = make(map[string]int, 200)
+
+	for i := 0;i < 100; i++ {
+		key := fmt.Sprintf("stu%02d", i) //生成stu开头的字符串
+		value := rand.Intn(100)          //生成0~99的随机整数
+		sourceMap[key] = value
+	}
+	//将map中的key取出存入数组并排序
+	var keys = make([]string, 0, 200)
+	for key := range sourceMap {
+		keys = append(keys, key)
+	}
+	//对切片进行排序
+	sort.Strings(keys)
+	//按照排序后的key遍历map
+	for _, key := range keys {
+		fmt.Println(key, sourceMap[key])
+	}
 }
 
 //使用delete()函数删除键值对
