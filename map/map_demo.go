@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 //map是一种无序的基于key-value的数据结构，Go语言中的map是引用类型，必须初始化才能使用
 /*
@@ -14,12 +16,38 @@ cap表示map的容量，该参数虽然不是必须的，但是我们应该在�
  */
 //判断某个键是否存在  value, ok := map[key]
 //若key存在则ok为true，value为对应的值；若key不存在，则ok为false，value为对应值类型的零值
+
+//map的遍历
+//使用for range遍历map
 func main()  {
 	fmt.Println("==========基本用法=========")
 	basicUsage()
 	fmt.Println("==============判断key是否存在===========")
 	containsKey()
+	fmt.Println("===========map遍历=============")
+	rangeMap()
 
+}
+
+//遍历map
+func rangeMap() {
+	sourceMap := map[string]int{
+		"李雷": 20,
+		"丹尼": 50,
+	}
+	//遍历出来的顺序与添加顺序无关
+	for k, v := range sourceMap {
+		fmt.Println(k,v)
+	}
+
+	//只遍历key
+	for k := range sourceMap {
+		fmt.Println(k)
+	}
+	//只遍历value
+	for _,v := range sourceMap {
+		fmt.Println(v)
+	}
 }
 
 //判断某个key是否存在
