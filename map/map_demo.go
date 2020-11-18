@@ -19,6 +19,14 @@ cap表示map的容量，该参数虽然不是必须的，但是我们应该在�
 
 //map的遍历
 //使用for range遍历map
+
+//使用delete()函数删除键值对
+/*
+delete()函数的格式如下：
+delete(map, key)
+map:表示要删除键值对的map
+key:表示要删除的键值对的键
+ */
 func main()  {
 	fmt.Println("==========基本用法=========")
 	basicUsage()
@@ -26,7 +34,20 @@ func main()  {
 	containsKey()
 	fmt.Println("===========map遍历=============")
 	rangeMap()
+	fmt.Println("==========delete()删除键值对")
+	deleteMapKey()
 
+}
+
+//使用delete()函数删除键值对
+func deleteMapKey() {
+	sourceMap := map[string]int{
+		"李雷": 20,
+		"丹尼": 50,
+	}
+	delete(sourceMap,"李雷")
+	delete(sourceMap,"李雷1")
+	fmt.Println(sourceMap)
 }
 
 //遍历map
