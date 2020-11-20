@@ -43,7 +43,18 @@ var 结构体实例 结构体类型
     1.必须初始化结构体的所有字段。
     2.初始值的填充顺序必须与字段在结构体中的声明顺序一致。
     3.该方式不能和键值初始化方式混用。
+
+构造函数：
+Go语言的结构体没有构造函数，但是可以自己实现；
+因为struct是值类型，如果结构体比较复杂的话，值拷贝性能开销会比较大，所以该构造函数返回的是结构体指针类型。
  */
+func newPerson(name, nickName string, age int) *person {
+	return &person{
+		name:name,
+		nickName:nickName,
+		age:age,
+	}
+}
 type person struct {
 	name,nickName string
 	age int
@@ -63,7 +74,34 @@ func main() {
 	keyValueInit()
 	fmt.Println("===========使用值的列表初始化==============")
 	valueInit()
+	fmt.Println("================面试题=================")
+	interviewDemo()
+	fmt.Println("==========构造函数============")
+	constructorDemo()
 
+}
+
+//模拟构造函数
+func constructorDemo() {
+	p5 := newPerson("哪吒","三太子", 20)
+	fmt.Printf("p5=%#v\n",p5)
+}
+
+func interviewDemo() {
+	m := make(map[string]*person)
+	stus := []person{
+		{name: "悟空", age: 18},
+		{name: "八戒", age: 23},
+		{name: "沙僧", age: 28},
+	}
+
+	for _, stu := range stus {
+		m[stu.name] = &stu
+	}
+	for k, v := range m {
+		fmt.Println(k, "=>", v.name)
+		fmt.Printf("v=%T\n",v)
+	}
 }
 
 //初始化值的方式初始化结构体
