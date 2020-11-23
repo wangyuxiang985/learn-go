@@ -69,7 +69,17 @@ Go语言中的方法（Method）是一种作用于特定类型变量的函数。
  	1.需要修改接收者中的值
     2.接收者是拷贝代价比较大的大对象
     3.保证一致性，如果有某个方法使用了指针接收者，那么其他的方法也应该使用指针接收者。
+
+任意类型添加方法
+接收者的类型可以是任何类型，不仅仅是结构体，任何类型都可以拥有方法，使用type关键字可以定义新的自定义类型
+PS:非本地类型不能定义方法，也就是说我们不能给别的包的类型定义方法
  */
+type MyInt int
+
+//为MyInt类型添加sayHello方法
+func (m MyInt) sayHello()  {
+	fmt.Println("Hello,我是一个MyInt的int")
+}
 
 func (p *person) setAge(newAge int)  {
 	p.age = newAge
@@ -110,6 +120,15 @@ func main() {
 	constructorDemo()
 	fmt.Println("==============方法调用===========")
 	methodDemo()
+	fmt.Println("===========自定义类型添加方法===================")
+	myIntSayHelloDemo()
+}
+
+func myIntSayHelloDemo() {
+	var mi MyInt
+	mi.sayHello()
+	mi = 100
+	fmt.Printf("mi=%#v\n%T\n", mi, mi)
 }
 
 func methodDemo() {
