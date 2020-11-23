@@ -77,7 +77,29 @@ PS:非本地类型不能定义方法，也就是说我们不能给别的包的�
 结构体的匿名字段
 结构体允许其成员字段在声明时没有字段名而只有类型，匿名字段默认采用类型名作为字段名，
 结构体要求字段名称必须唯一，因此一个结构体中同种类型的匿名字段只能有一个。
+
+嵌套结构体
+一个结构体中可以嵌套包含另一个结构体或结构体指针；也可以嵌套匿名结构体，此时当访问结构体成员时会先在结构体中查找该字段，找不到再去匿名结构体中查找，
+当嵌套的多个结构体内部字段名冲突时，为了避免歧义需要指定具体的内嵌结构体的字段。(ambiguous selector)
  */
+//Address 地址结构体
+type Address struct {
+	province string
+	city     string
+	createTime string
+}
+//Email 邮箱结构体
+type Email struct {
+	cccount    string
+	createTime string
+}
+//User 用户结构体
+type User struct {
+	name    string
+	gender  string
+	Address //匿名结构体
+	Email
+}
 type Dog struct {
 	string
 	int
@@ -133,6 +155,20 @@ func main() {
 	myIntSayHelloDemo()
 	fmt.Println("===========结构体匿名字段===================")
 	anonymousStract()
+	fmt.Println("===================嵌套结构体==========")
+	nestedStructuresDemo()
+}
+
+func nestedStructuresDemo() {
+	var user1 User
+	user1.name = "李明"
+	user1.gender = "男"
+	user1.Address.createTime = "2020"
+	user1.province = "北京"
+	user1.city = "北京"
+	user1.Email.createTime = "2019"
+	user1.cccount = "dffdaf"
+	fmt.Printf("user1=%#v\n",user1)
 }
 
 func anonymousStract() {
