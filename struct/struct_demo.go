@@ -73,7 +73,16 @@ Go语言中的方法（Method）是一种作用于特定类型变量的函数。
 任意类型添加方法
 接收者的类型可以是任何类型，不仅仅是结构体，任何类型都可以拥有方法，使用type关键字可以定义新的自定义类型
 PS:非本地类型不能定义方法，也就是说我们不能给别的包的类型定义方法
+
+结构体的匿名字段
+结构体允许其成员字段在声明时没有字段名而只有类型，匿名字段默认采用类型名作为字段名，
+结构体要求字段名称必须唯一，因此一个结构体中同种类型的匿名字段只能有一个。
  */
+type Dog struct {
+	string
+	int
+}
+
 type MyInt int
 
 //为MyInt类型添加sayHello方法
@@ -122,6 +131,17 @@ func main() {
 	methodDemo()
 	fmt.Println("===========自定义类型添加方法===================")
 	myIntSayHelloDemo()
+	fmt.Println("===========结构体匿名字段===================")
+	anonymousStract()
+}
+
+func anonymousStract() {
+	d := Dog{
+		"二哈",
+		3,
+	}
+	fmt.Printf("d=%#v\n%T\n", d, d)
+	fmt.Println(d.string)
 }
 
 func myIntSayHelloDemo() {
