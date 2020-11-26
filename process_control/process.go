@@ -72,8 +72,22 @@ select由比较多的限制，其中最大的一条限制就是每个case语句�
 如果没有任意一条语句可以执行（即所有的通道都被阻塞），那么有两种可能的情况：
 ①如果给出了default语句，那么就会执行default的流程，同时程序的执行会从select语句后的语句中恢复。
 ②如果没有default语句，那么select语句将被阻塞，直到至少有一个case可以进行下去。
+
+循环语句for:
+Go语言的For循环有3中形式，只有其中的一种使用分号
+	for init; condition; post { }
+    for condition { }
+    for { }
+    init： 一般为赋值表达式，给控制变量赋初值；
+    condition： 关系表达式或逻辑表达式，循环控制条件；
+    post： 一般为赋值表达式，给控制变量增量或减量。
+    for语句执行过程如下：
+    ①先对表达式 init 赋初值；
+    ②判别赋值表达式 init 是否满足给定 condition 条件，若其值为真，满足循环条件，则执行循环体内语句，
+	然后执行 post，进入第二次循环，再判别 condition；否则判断 condition 的值为假，不满足条件，就终止for循环，执行循环体外语句。
  */
 func main() {
+
 	fmt.Println("==========if============")
 	ifDemo()
 	fmt.Println("===========switch==============")
@@ -84,7 +98,47 @@ func main() {
 	selectDemo()
 	fmt.Println("============select time out ==========")
 	selectTimeOutDemo()
+	fmt.Println("==========for============")
+	forDemo()
+	forDemo2()
 
+}
+
+func forDemo2() {
+	var b int = 15
+	var a int
+	numbers := [6]int{1, 3, 5, 7}
+
+	for a := 0; a<10;a++ {
+		fmt.Printf("a 的值为: %d\n", a)
+	}
+
+	for a< b {
+		a++
+		fmt.Printf("a 的值为: %d\n", a)
+	}
+	for i,x := range numbers {
+		fmt.Printf("第 %d 位 x 的值 = %d\n", i,x)
+	}
+
+}
+
+func forDemo() {
+	s := "abc"
+
+	for i, n := 0, len(s); i < n; i++ { // 常见的 for 循环，支持初始化语句。
+		println(s[i])
+	}
+
+	n := len(s) - 1
+	for n >= 0 {                // 替代 while (n > 0) {}
+		println(s[n])        // 替代 for (; n > 0;) {}
+		n--
+	}
+
+	//for {                    // 替代 while (true) {}
+	//	println(s)            // 替代 for (;;) {}
+	//}
 }
 var resChan = make(chan int)
 func selectTimeOutDemo() {
