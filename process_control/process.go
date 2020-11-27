@@ -96,6 +96,12 @@ PS: range 会复制对象
 for 和 for range有区别：
 	for可以遍历array和slice，遍历key为整型递增的map，遍历string
 	for range可以完成所有for可以做的事情，却能做到for不能做的，包括遍历key为string类型的map并同时获取key和value遍历channel
+
+循环控制Goto、Break、Continue
+	1.三个语句都可以配合标签(label)使用
+    2.标签名区分大小写，定以后 若不使用会造成编译错误
+    3.continue、break配合标签(label)可用于多层循环跳出
+    4.goto是调整执行位置，与continue、break配合标签(label)的结果并不相同
  */
 func main() {
 
