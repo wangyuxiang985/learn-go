@@ -60,6 +60,9 @@ func myfunc(args ...int) {    //0个或多个参数} //其中args是一个slice�
 
 匿名函数：
 匿名函数由一个不带函数名的函数声明和函数体组成。匿名函数的优越性在于可以直接使用函数内的变量，不必申明。
+
+闭包：
+闭包是由函数及其相关引用环境组合而成的实体(即：闭包=函数+引用环境)。
 */
 func test(fn func() int) int {
 	return fn()
@@ -122,6 +125,26 @@ func main() {
 	returnDemo()
 	fmt.Println("===========匿名函数")
 	anonymousFunction()
+	fmt.Println("============闭包")
+	closureDemo()
+}
+func a() func() int {
+	i := 0
+	b := func() int {
+		i++
+		fmt.Println("b=>",i)
+		return i
+	}
+	return b
+}
+func closureDemo() {
+	c := a()
+	c()
+	c()
+	c()
+
+	a() //不会输出i
+	a()() //b=> 1
 }
 
 func anonymousFunction() {
