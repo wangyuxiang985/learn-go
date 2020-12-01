@@ -30,6 +30,20 @@ golang函数特点:
 例如：
 	package math
 	func Sin(x float64) float //implemented in assembly language
+
+参数：
+函数可以通过两种方式来传递参数：
+	值传递：指在调用函数时将实际参数复制一份传递到函数中，这样在函数中如果对参数进行修改，将不会影响到实际参数。
+	引用传递：是指在调用函数时将实际参数的地址传递到函数中，那么在函数中对参数所进行的修改，将影响到实际参数。
+默认情况下，Go 语言使用的是值传递，即在调用过程中不会影响到实际参数。
+PS：
+	无论是值传递，还是引用传递，传递给函数的都是变量的副本，不过，值传递是值的拷贝。引用传递是地址的拷贝
+	map、slice、chan、指针、interface默认以引用的方式传递。
+不定参数传值 就是函数的参数不是固定的，后面的类型是固定的。Golang 可变参数本质上就是 slice。只能有一个，且必须是最后一个，在参数后加上“…”即可。
+func myfunc(args ...int) {    //0个或多个参数} //其中args是一个slice，我们可以通过arg[index]依次访问所有参数,通过len(arg)来判断传递参数的个数.
+任意类型的不定参数： 就是函数的参数和每个参数的类型都不是固定的。
+	用interface{}传递任意类型数据是Go语言的惯例用法，而且interface{}是类型安全的。func myfunc(args ...interface{}) {}
+使用 slice 对象做变参时，必须展开。（slice...）
 */
 func test(fn func() int) int {
 	return fn()
@@ -40,9 +54,25 @@ type FormatFunc func(s string, x, y int) string
 func format(fn FormatFunc, s string, x, y int) string {
 	return fn(s, x, y)
 }
+func test2(s string, n ...int) string {
+	var x int
+	for _, i := range n {
+		x += i
+	}
+
+	return fmt.Sprintf(s, x)
+}
 func main() {
 	fmt.Println("===========函数定义")
 	functionDefinition()
+	fmt.Println("===========参数")
+	paramDemo()
+}
+
+func paramDemo() {
+	s := []int{1, 2, 3}
+	res := test2("sum: %d", s...)    // slice... 展开slice
+	println(res)
 }
 
 func functionDefinition() {
