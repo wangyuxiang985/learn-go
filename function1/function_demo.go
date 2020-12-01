@@ -44,6 +44,16 @@ func myfunc(args ...int) {    //0个或多个参数} //其中args是一个slice�
 任意类型的不定参数： 就是函数的参数和每个参数的类型都不是固定的。
 	用interface{}传递任意类型数据是Go语言的惯例用法，而且interface{}是类型安全的。func myfunc(args ...interface{}) {}
 使用 slice 对象做变参时，必须展开。（slice...）
+
+返回值：
+"_"标识符，用来忽略函数的某个返回值；
+返回值可以被命名，并且就像在函数体开头声明的变量那样使用。
+没有参数的 return 语句返回各个返回变量的当前值。这种用法被称作“裸”返回。
+返回值不能用容器对象接收多返回值。只能用多个变量，或 "_" 忽略。
+多返回值可直接作为其他函数调用实参。
+命名返回参数可看做与形参类似的局部变量，最后由 return 隐式返回。
+命名返回参数可被同名局部变量遮蔽，此时需要显式返回。
+命名返回参数允许 defer 延迟调用通过闭包读取和修改
 */
 func test(fn func() int) int {
 	return fn()
@@ -62,11 +72,57 @@ func test2(s string, n ...int) string {
 
 	return fmt.Sprintf(s, x)
 }
+//直接返回语句仅应当用在像下面这样的短函数中。在长的函数中它们会影响代码的可读性。
+func add(a, b int) (c int) {
+	c = a +  b
+	return
+}
+func calc(a, b int) (sum int, avg int) {
+	sum = a + b
+	avg = (a + b) / 2
+	return
+}
+func test3() (int, int) {
+	return 1, 2
+}
+func explicitReturn(x, y int) (z int) {
+	//var z = x + y //z redeclared in this block
+	//return //z is shadowed during return
+	z = x + y
+	return z
+}
+func deferAdd(x, y int) (z int) {
+	/*
+	defer触发逻辑：
+		包裹defer的函数返回时
+		包裹defer的函数执行到末尾时
+		所在的goroutine发生panic时
+	有多个时执行顺序：defer需要压栈，出栈；LIFO
+	*/
+	defer func() {
+		z += 100
+	}()
+
+	z = x + y
+	return
+}
+
 func main() {
 	fmt.Println("===========函数定义")
 	functionDefinition()
 	fmt.Println("===========参数")
 	paramDemo()
+	fmt.Println("===========返回值")
+	returnDemo()
+}
+
+func returnDemo() {
+	var a, b int = 1, 2
+	c := add(a, b)
+	sum, avg := calc(a, b)
+	fmt.Println(a, b, c, sum, avg)
+	fmt.Println("dddd:",add(test3()))
+	fmt.Println(deferAdd(test3()))
 }
 
 func paramDemo() {
