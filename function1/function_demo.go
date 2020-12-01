@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 /*
 golang函数特点:
@@ -54,6 +57,9 @@ func myfunc(args ...int) {    //0个或多个参数} //其中args是一个slice�
 命名返回参数可看做与形参类似的局部变量，最后由 return 隐式返回。
 命名返回参数可被同名局部变量遮蔽，此时需要显式返回。
 命名返回参数允许 defer 延迟调用通过闭包读取和修改
+
+匿名函数：
+匿名函数由一个不带函数名的函数声明和函数体组成。匿名函数的优越性在于可以直接使用函数内的变量，不必申明。
 */
 func test(fn func() int) int {
 	return fn()
@@ -114,6 +120,13 @@ func main() {
 	paramDemo()
 	fmt.Println("===========返回值")
 	returnDemo()
+	fmt.Println("===========匿名函数")
+	anonymousFunction()
+}
+
+func anonymousFunction() {
+	getSqrt := func(a float64) float64 {return math.Sqrt(a)}
+	fmt.Println("getSqrt:",getSqrt(4))
 }
 
 func returnDemo() {
