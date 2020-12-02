@@ -63,6 +63,17 @@ func myfunc(args ...int) {    //0个或多个参数} //其中args是一个slice�
 
 闭包：
 闭包是由函数及其相关引用环境组合而成的实体(即：闭包=函数+引用环境)。
+
+延迟调用（defer）：
+defer特性：
+	1. 关键字 defer 用于注册延迟调用。
+    2. 这些调用直到 return 前才被执。因此，可以用来做资源清理。
+    3. 多个defer语句，按先进后出的方式执行。
+    4. defer语句中的变量，在defer声明时就决定了。
+defer用途：
+	1. 关闭文件句柄
+    2. 锁资源释放
+    3. 数据库连接释放
 */
 func test(fn func() int) int {
 	return fn()
@@ -127,6 +138,22 @@ func main() {
 	anonymousFunction()
 	fmt.Println("============闭包")
 	closureDemo()
+	fmt.Println("=============defer")
+	deferDemo()
+}
+
+func deferDemo() {
+	var whatever [5]struct{}
+	for i := range whatever {
+		fmt.Println("defer:", i)
+		defer fmt.Println(i)
+	}
+	fmt.Println("进入defer啦")
+	//defer 碰上闭包
+	for i := range whatever {
+		fmt.Println("defer func:", i)
+		defer func() { fmt.Println(i) }()
+	}
 }
 func a() func() int {
 	i := 0
